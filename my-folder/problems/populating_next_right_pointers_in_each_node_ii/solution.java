@@ -92,8 +92,6 @@ class Solution {
                     needle = levelHead;
                 }
             }
-            cur = levelHead.next;
-            levelHead.next = null;
         
         return root;
     }
