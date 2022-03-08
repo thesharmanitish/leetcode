@@ -15,14 +15,16 @@ class Solution {
     
     int n = nums.length;
     boolean[] dp = new boolean[sum+1];
-    Arrays.fill(dp, false);
     dp[0] = true;
     
     for (int num : nums) {
-        for (int i = sum; i > 0; i--) {
-            if (i >= num) {
-                dp[i] = dp[i] || dp[i-num];
-            }
+        if(dp[sum])
+           return true;
+        for (int i = sum; i >= num; i--) {
+            dp[i] = dp[i] || dp[i-num];
+            if (i == num) 
+                break;
+            
         }
     }
     
@@ -41,26 +43,26 @@ class Solution {
         
     }
     
-    boolean subsetSum(int[] nums, int n, int sum){
+//     boolean subsetSum(int[] nums, int n, int sum){
         
-        // Arrays.fill(dp[0],false);
-        // dp[0][0] = true;
-        for(int i =0;i<=n;i++)
-            dp[i][0] = true;
-        for(int i =1;i<=sum;i++)
-            dp[0][i] = false;
-        for(int i=1;i<=n;i++){
-           for(int j=1;j<=sum;j++){
-                dp[i][j]  =  dp[i-1][j]; 
-                if(nums[i-1]<=j){
-                    dp[i][j]  = dp[i-1][j-nums[i-1]] || dp[i][j];
-                }
+//         // Arrays.fill(dp[0],false);
+//         // dp[0][0] = true;
+//         for(int i =0;i<=n;i++)
+//             dp[i][0] = true;
+//         for(int i =1;i<=sum;i++)
+//             dp[0][i] = false;
+//         for(int i=1;i<=n;i++){
+//            for(int j=1;j<=sum;j++){
+//                 dp[i][j]  =  dp[i-1][j]; 
+//                 if(nums[i-1]<=j){
+//                     dp[i][j]  = dp[i-1][j-nums[i-1]] || dp[i][j];
+//                 }
                     
             
-            } 
+//             } 
             
-        }
+//         }
             
-        return dp[n][sum];
-    }
+//         return dp[n][sum];
+//     }
 }
