@@ -12,7 +12,7 @@ public int[] searchRange(int[] A, int target) {
         else j = mid;
     }
     if (A[i]!=target) return ret;
-    else ret[0] = i;
+    else ret[0] = j;
 
     
     // Search for the right one
