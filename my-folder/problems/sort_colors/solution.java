@@ -1,23 +1,21 @@
 class Solution {
     
     public void sortColors(int[] nums) {
-    int last = nums.length-1;
-    int start = 0;
-    int size= last;
-    int i=0;
-    if(nums.length <2)     return ;
-     while(i <= last){
-       if(nums[i] == 0 ){
-           swap(nums,i, start);
-           start++;
-           i++;
-       }
-        else if(nums[i] == 2 && i != last){
-           swap(nums,i, last);
-           last--;
-       }else{
-            i++;
+    int j = nums.length-1;
+    int i=0, start=0 ;
+    if(nums.length <=1)     return ;
+    while(i<=j){
+      if(nums[i] ==0){
+          swap(nums,i,start);
+          i++;
+          start++;
+          }
+        else if(nums[i] ==2){
+          swap(nums,i,j);
+            j--;
         }
+        else i++;
+
      }
     }
     
@@ -47,8 +45,8 @@ class Solution {
 //     }
     
     public void swap(int[] nums, int a, int b){
-        nums[a] = nums[a]^nums[b];
-        nums[b] = nums[a]^nums[b];
-        nums[a] = nums[a]^nums[b];    
+        int temp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = temp;    
     }
 }
