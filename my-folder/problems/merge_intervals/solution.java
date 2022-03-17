@@ -10,8 +10,6 @@ class Solution {
                     if(b<intervals[i][1]){
                         b = intervals[i][1];
                     }
-                    intervals[i][1] = -1;
-                    intervals[i][0] = -1;
                 }else{
                     intervals[ind][1] = b;
                     intervals[ind][0] = a;
@@ -22,14 +20,12 @@ class Solution {
         }
         intervals[ind][1] = b;
         intervals[ind][0] = a;        
-        int k=0;
         int[][] res = new int[ind+1][2];
         for(int i=0;i<=ind;i++){
             if(intervals[i][0]==-1)
                break;
-            res[k][0] =  intervals[i][0];
-            res[k][1] =  intervals[i][1];
-            k++;
+            res[i][0] =  intervals[i][0];
+            res[i][1] =  intervals[i][1];
         }
         return res;
     }
