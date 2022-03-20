@@ -1,24 +1,34 @@
 class Solution {
-    public int[] sortArray(int[] nums) {
-        int prev = 0;
-        for(int i=1;i<nums.length;i++){
-            prev = i-1;
-            int temp = nums[prev+1];
-            while(prev>=0){
-                //swap(nums, prev, prev+1);
-                if(nums[prev] >temp){
-                   nums[prev+1] = nums[prev];
-                    prev--;
-                }else 
-                    break;
+	    public static  int[] sortArray(int[] nums) {
+            if (nums == null || nums.length == 0) return nums;
+	         quickSort(nums, 0, nums.length-1);
+	         return nums;   
+	    }
+	    public static  void quickSort(int[] nums, int start, int end) {
+             int pivot = partition(nums, start, end);
+             if(start< pivot-1)
+	            quickSort(nums, start, pivot-1);
+             if(pivot<end)
+                quickSort(nums,pivot, end);
+	            
+	    }	    
+	 	public static  int partition(int[] nums, int start, int end) {
+            int i = start, j = end;
+            int pivot = nums[(start + end) / 2];
+            int temp;
+            while(i<=j){
+                while(nums[i] < pivot)
+                    i++;
+                while(nums[j] > pivot)
+                    j--;
+                if (i <= j) {
+                    temp = nums[i];
+                    nums[i]  = nums[j];
+                    nums[j] = temp;
+                    i++;
+                    j--;       
+                }
             }
-            nums[prev+1] = temp;
+            return i;           
         }
-        return nums;
-    }
-    public void swap(int[] arr, int a, int b){
-        arr[a] = arr[a]+arr[b];
-        arr[b] = arr[a]-arr[b];
-        arr[a] = arr[a]-arr[b];
-    }
 }
