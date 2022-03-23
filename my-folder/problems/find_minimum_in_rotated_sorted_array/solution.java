@@ -22,12 +22,11 @@ class Solution {
 
         while(low<high){
             int mid = low + (high-low)/2;
-            if(mid>0 && arr[mid-1]>arr[mid])
-                return arr[mid];
-            else if (arr[low] <= arr[mid] && arr[mid] > arr[high]) 
-                low = mid+1;
+            if (arr[mid] <= arr[high]) 
+                high = mid;
             else{
-                high = mid-1;
+                low = mid+1;
+                
             }
         }
         return arr[low];
