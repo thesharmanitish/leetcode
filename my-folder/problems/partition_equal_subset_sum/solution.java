@@ -2,12 +2,7 @@ class Solution {
     boolean[][] dp;
     public boolean canPartition(int[] nums) {
         
-           int sum = 0;
-    
-    for (int num : nums) {
-        sum += num;
-    }
-    
+    int sum = Arrays.stream(nums).sum();
     if ((sum & 1) == 1) {
         return false;
     }
@@ -20,11 +15,11 @@ class Solution {
     for (int num : nums) {
         if(dp[sum])
            return true;
+        if(num <= sum && dp[sum-num])
+          	return true;         
         for (int i = sum; i >= num; i--) {
-            dp[i] = dp[i] || dp[i-num];
-            if (i == num) 
-                break;
-            
+            dp[i] = dp[i] || dp[i-num];      
+                       
         }
     }
     
@@ -41,7 +36,7 @@ class Solution {
 //         dp = new boolean[nums.length+1][sum+1];
 //       return  subsetSum(nums,nums.length,sum);
         
-    }
+//     }
     
 //     boolean subsetSum(int[] nums, int n, int sum){
         
@@ -55,7 +50,7 @@ class Solution {
 //            for(int j=1;j<=sum;j++){
 //                 dp[i][j]  =  dp[i-1][j]; 
 //                 if(nums[i-1]<=j){
-//                     dp[i][j]  = dp[i-1][j-nums[i-1]] || dp[i][j];
+//                     dp[i][j]  = dp[i-1][j-nums[i-1]] || dp[i-1][j];
 //                 }
                     
             
@@ -64,5 +59,5 @@ class Solution {
 //         }
             
 //         return dp[n][sum];
-//     }
+    }
 }
