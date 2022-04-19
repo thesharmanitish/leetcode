@@ -5,11 +5,9 @@ class Solution {
          if(i==0){
              start=end+1;
          }
-         
-         max = end-start+1;
-         if(max>res)
-             res= max;
-         end++;
+            max = end-start+1;
+            res = Math.max(max,res);
+            end++;
         }
         return res;
     }
