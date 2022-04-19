@@ -22,8 +22,11 @@ class Solution {
         if(root==null)
             return next;
         root.right = increasingBST(root.right, next ) ;
-        TreeNode tmp = increasingBST(root.left, root ) ;
-        root.left = null;
-        return tmp;
+        TreeNode res = increasingBST(root.left, root); 
+        root.left =  null;
+        
+        return res;
+        
+        
     }
 }
