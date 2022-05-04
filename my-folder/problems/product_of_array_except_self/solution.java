@@ -1,32 +1,26 @@
 class Solution {
     public int[] productExceptSelf(int[] nums) {
-        int prod = 1;
-        boolean flag = false, multizero  =false;
+        int prod = 1, ind = -1;
+        boolean flag = false;
         for(int i=0;i<nums.length;i++){
             if(nums[i] !=0){
                 prod *= nums[i];
                 
             }else {
-                if(flag)
-                    multizero = true;
+                if(flag){
+                    return new int[nums.length];
+                }
                 flag = true;
+                ind = i;
             
             }
         }
-        
-        for(int i=0;i<nums.length;i++){
-            if(nums[i]!=0){
-                if(!flag)
-                    nums[i] = prod/nums[i];
-                else 
-                    nums[i] = 0;
-            }
-            else{
-                if(multizero)
-                    nums[i] = 0;    
-                else 
-                    nums[i] = prod;
-            }
+        if(!flag){
+           for(int i=0;i<nums.length;i++)
+               nums[i] = prod/nums[i];
+        }else{
+           nums = new int[nums.length];
+           nums[ind] = prod;
         }
         return nums;
     }
