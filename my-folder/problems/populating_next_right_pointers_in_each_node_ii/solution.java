@@ -22,7 +22,34 @@ class Node {
 */
 
 class Solution {
-/*    public Node connect(Node root) {
+    /*
+    public Node connect(Node root) {
+        Deque<Node> queue = new LinkedList<>();
+        
+        queue.addLast(root);
+        
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            Node prev = null;
+            for(int i=0;i<size;i++){
+                Node temp = queue.pollFirst();
+                if(temp == null)
+                    continue;
+                if(prev !=null) 
+                    prev.next = temp;
+                
+                if(temp.left !=null)
+                    queue.addLast(temp.left);
+                if(temp.right !=null)
+                    queue.addLast(temp.right);     
+                
+                prev = temp;
+            }
+            
+        }
+        return root;
+    }
+    public Node connect(Node root) {
         Deque<Node> bfs = new LinkedList<>();
         bfs.add(root);
         Deque<Node> layer = new LinkedList<>();
@@ -74,25 +101,28 @@ class Solution {
         if(root ==null) return root;
         Node cur = root, levelHead = new Node(0);
         
-            Node needle = levelHead;
-            while(cur!=null){
-                if(cur.left!=null){
-                    needle.next = cur.left;
-                    needle = needle.next;
-                }
-                if(cur.right!=null){
-                    needle.next = cur.right;
-                    needle = needle.next;
-                }
-                if(cur.next!=null)
-                    cur = cur.next;
-                else{
-                    cur = levelHead.next;
-                    levelHead.next = null;
-                    needle = levelHead;
-                }
+        Node needle = levelHead;
+        
+        while(cur !=null){
+            if(cur.left != null){
+                needle.next = cur.left;
+                needle = needle.next;
             }
+            if(cur.right != null){
+                needle.next = cur.right;
+                needle = needle.next;
+            }
+            
+            if(cur.next !=null)
+                cur = cur.next;
+            else{
+                cur = levelHead.next;
+                levelHead.next = null;
+                needle = levelHead;
+            }
+            
+        }
         
         return root;
-    }
+    }    
 }
