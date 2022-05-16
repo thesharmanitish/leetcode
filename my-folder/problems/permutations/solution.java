@@ -1,23 +1,26 @@
 class Solution {
-    
-    
-        
     public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> res = new ArrayList<>();
+        List<List<Integer>>  result  = new ArrayList<>();
+        boolean[] used = new boolean[nums.length];
+        permuteHelper(nums, used, result, new ArrayList());
         
-        permute(nums, res, new ArrayList<Integer>(), 0);
-        return res;
+        return result;
     }
-   public void permute(int[] nums, List<List<Integer>> res,List<Integer> suffix, int ind) {
-        if(suffix.size()==nums.length){
-            res.add(suffix);
+    
+    public void permuteHelper(int[] nums,boolean[] used, List<List<Integer>> result, List<Integer> current) {
+        if(current.size()  == nums.length){
+            result.add(new ArrayList(current));
             return;
         }
-       int num = nums[ind];
-       for(int i=0;i<=suffix.size();i++){
-           List<Integer> ll = new ArrayList<>(suffix);
-           ll.add(i,num);
-           permute(nums, res, ll, ind+1)    ;
-       }
-    }
+        for(int i=0;i<nums.length;i++){
+            if(used[i])
+                continue;
+            current.add(nums[i]);
+            used[i] = true;
+            permuteHelper(nums, used, result, current);            
+            used[i] = false;
+            current.remove(current.size()-1);
+        }
+        
+    }    
 }
