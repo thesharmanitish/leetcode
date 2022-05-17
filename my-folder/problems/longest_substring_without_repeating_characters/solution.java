@@ -1,42 +1,26 @@
 class Solution {
-    
     public int lengthOfLongestSubstring(String s) {
-        boolean[] flag = new boolean[256];
-        int result = 0;
-        int start = 0;
-        char[] arr = s.toCharArray();
-        for (int i = 0; i < arr.length; i++) {
-            char current = arr[i];
-            if (flag[current]) {
-                result = Math.max(result, i - start);
-                for (int k = start; k < i; k++) {
-                    if (arr[k] == current) {
-                        start = k + 1;
+        
+        int start = 0, cur=0, max = 0;
+        char[] nums = s.toCharArray();
+        boolean[] letters = new boolean[256];
+        for(int i=0;i<s.length();i++){
+            cur++;
+            if(letters[nums[i]]){
+                for(int j=start;j<i;j++){
+                    if(nums[j]== nums[i]){
+                        start = j+1;
+                        
                         break;
+                        
                     }
-                    flag[arr[k]] = false;
                 }
-            } else {
-                flag[current] = true;
-            }
+                cur = i-start+1;
+            }else
+                letters[nums[i]] = true;
+            max = Math.max(cur, max);
+            
         }
-        result = Math.max(arr.length - start, result);
-
-        return result;
+        return max;
     }
-    
-//     public int lengthOfLongestSubstring(String s) {
-//         Deque<Character> set =new LinkedList<>();
-//         int max= 0;
-//         for(char c:s.toCharArray()){
-//             if(set.contains(c)){
-//                 max=Math.max(max, set.size());
-//                 while(set.pop()!= c);
-                    
-//                 }
-//             set.add(c);
-                
-//         }
-//         return Math.max(max, set.size());
-//     }
 }
