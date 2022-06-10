@@ -1,13 +1,19 @@
 class Solution {
     public boolean canAttendMeetings(int[][] intervals) {
-        boolean[] arr= new boolean[(1<<20)+1];
-        for(int[] i:intervals){
-            for(int j=i[0];j<i[1];j++){
-                if(arr[j])
+        Arrays.sort(intervals, (o1,o2)-> {return o1[0]-o2[0];});
+        
+        int prev = -1;
+        for(int[] a:intervals){
+            if(prev ==-1)
+                prev = a[1];
+            else{
+                if(a[0]<prev)
                     return false;
+                prev = a[1];
             }
-            Arrays.fill(arr, i[0],i[1], true)   ;  
+            
         }
+        
         return true;
     }
 }
