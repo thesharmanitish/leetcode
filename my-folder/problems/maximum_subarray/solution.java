@@ -1,31 +1,30 @@
 class Solution {
     public int maxSubArray(int[] nums) {
-        int max = Integer.MIN_VALUE, curMax = 0;
-        if(nums.length<=1)
-            return nums[0];
-        for(int i=0;i<nums.length;i++){
-            curMax = curMax+nums[i];
-            max = Math.max(max, curMax);
-            if(curMax<0)
-                curMax = 0;
+        return findBestSubarray(nums, 0, nums.length - 1);
+    }
+    
+    private int findBestSubarray(int[] nums, int left, int right) {
+        // Base case - empty array.
+        if (left > right) {
+            return Integer.MIN_VALUE;
         }
-
-        return max;
+        int mid = (left + right) >>1;
+        int cur =0, maxLeft=0, maxRight=0, max= 0;
         
+        for(int i=mid-1;i>=left;i--){
+            cur += nums[i];
+            maxLeft = Math.max(cur, maxLeft);
+        }
+        cur =0;
+        for(int i=mid+1;i<=right;i++){
+            cur += nums[i];
+            maxRight = Math.max(cur, maxRight);            
+        }
+        max = nums[mid]+maxLeft+maxRight;
         
+        int leftHalf = findBestSubarray(nums, left, mid - 1);
+        int rightHalf = findBestSubarray(nums, mid + 1, right);        
         
-        
-        
-//                 int n = nums.length;
-//         int max = Integer.MIN_VALUE, sum = 0;
-        
-//         for(int i=0;i<n;i++){
-//             sum += nums[i];
-//             max = Math.max(sum,max);
-            
-//             if(sum<0) sum = 0;
-//         }
-        
-//         return max;
+        return Math.max(max, Math.max(leftHalf, rightHalf));
     }
 }
