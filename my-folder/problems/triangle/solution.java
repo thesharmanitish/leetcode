@@ -9,23 +9,16 @@ class Solution {
 public int minimumTotal(List<List<Integer>> triangle, int start, int end, int sum) {
         if(start>end)
             return sum;
-        int[][]  dp = new int[triangle.size()+1][triangle.size()+1];
-        for(int i=0;i<=triangle.size();i++){
-            dp[i][0] = Integer.MAX_VALUE;
-            dp[0][i] = Integer.MAX_VALUE;
-        }
-            
-        List<Integer> tr = triangle.get(0);
-        for(int i=triangle.size();i>=0;i--){
+        int[]  dp = new int[triangle.size()+1];
+        for(int j=1;j<=triangle.size();j++)
+            dp[j] = triangle.get(triangle.size()-1).get(j-1);
+        for(int i=triangle.size()-1;i>0;i--){
             for(int j=1;j<=i;j++){
-                if(i ==triangle.size()){
-                    dp[i][j] = triangle.get(i-1).get(j-1);
-                }else
-                dp[i][j] = triangle.get(i-1).get(j-1) + Math.min(dp[i+1][j],dp[i+1][j+1]); ;
+                dp[j] = triangle.get(i-1).get(j-1) + Math.min(dp[j],dp[j+1]); ;
             }
         }
         
-        return dp[1][1];
+        return dp[1];
     
     }    
 // 	public int minimumTotal(List<List<Integer>> triangle) {
