@@ -15,31 +15,32 @@
  */
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> zigzagOrder = new ArrayList();
-        Deque<TreeNode> bfs = new LinkedList();
-        if(root == null) return zigzagOrder;
+        Deque<TreeNode> bfs = new LinkedList<>();
+        List<List<Integer>> res = new LinkedList<>();
+        if(root ==null)
+            return res;
         bfs.add(root);
-        int height = 0;
+        boolean flag= false;
         while(!bfs.isEmpty()){
-            List<Integer> level = new ArrayList();
-            int queueSize = bfs.size();
+            int size = bfs.size();
+            List<Integer> ll = new LinkedList<>();
             
-           for(int i=0; i< queueSize;i++){
-               TreeNode node = bfs.poll();
-               if(node!=null){
-            	 level.add(node.val);
-                 if(node.left!=null) bfs.add(node.left);
-                 if(node.right!=null) bfs.add(node.right);
-                 
-                }
-           }
-           if(height %2 != 0)
-        	   Collections.reverse(level);
-         zigzagOrder.add(level)  ;
-         height++;
-            
+            for(int i=0;i<size;i++){
+                TreeNode t = bfs.poll();
+                if(t.left !=null)    
+                    bfs.add(t.left);
+                if(t.right !=null)    
+                    bfs.add(t.right);
+                ll.add(t.val);
+            }
+            if(!flag)
+                res.add(ll);
+            else {
+                Collections.reverse(ll);
+                res.add(ll);
+            }
+            flag = !flag;
         }
-        return zigzagOrder;
-        
+        return res;
     }
 }
