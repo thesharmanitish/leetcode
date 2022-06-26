@@ -15,18 +15,17 @@ class Solution {
 
        
        boolean[][] dp  = new boolean[n+1][n+1];
-       for( i=n;i>=0;i--){
-           for( j=i;j<=n;j++){
-               if(arr[i] == arr[j] && (j-i<2 || dp[i+1][j-1])){
-                   dp[i][j] = true;
-                   if(end-start<j-i){
-                       end =j;
-                       start =i;
-                   }
-                       
-               }
-           }
-       }
+        for( i=n;i>=0;i--){
+            for( j=i;j<=n;j++){
+                if(arr[i]==arr[j] && (j-i<2 || dp[i+1][j-1])){
+                    dp[i][j] = true;
+                    if(j-i>end-start){
+                        start = i;
+                        end= j;
+                    }
+                }
+            }
+        }
         
        return s.substring(start, end+1); 
     }
