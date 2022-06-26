@@ -15,7 +15,7 @@ class Solution {
     public boolean isRobotBounded(String instructions) {
         Direction dir = Direction.NORTH;
         Pair p = new Pair(0,0);
-        for(int i=0;i<4;i++){
+        // for(int i=0;i<4;i++){
             for(char c:instructions.toCharArray()){
                 switch(c){
                     case 'G': {
@@ -37,8 +37,8 @@ class Solution {
             else if(dir == Direction.NORTH)
                 return false;
 
-        }
-        return false;
+        // }
+        return true;
     }
         public void move(Direction direction, Pair p) {
             switch(direction){
