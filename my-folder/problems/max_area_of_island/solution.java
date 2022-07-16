@@ -1,36 +1,78 @@
 class Solution {
+   public static int count=0;
     public int maxAreaOfIsland(int[][] grid) {
-        boolean[][] seen = new boolean[grid.length][grid[0].length];
-        int[] dr = new int[]{1, -1, 0, 0};
-        int[] dc = new int[]{0, 0, 1, -1};
-
-        int ans = 0;
-        for (int r0 = 0; r0 < grid.length; r0++) {
-            for (int c0 = 0; c0 < grid[0].length; c0++) {
-                if (grid[r0][c0] == 1 && !seen[r0][c0]) {
-                    int shape = 0;
-                    Stack<int[]> stack = new Stack();
-                    stack.push(new int[]{r0, c0});
-                    seen[r0][c0] = true;
-                    while (!stack.empty()) {
-                        int[] node = stack.pop();
-                        int r = node[0], c = node[1];
-                        shape++;
-                        for (int k = 0; k < 4; k++) {
-                            int nr = r + dr[k];
-                            int nc = c + dc[k];
-                            if (0 <= nr && nr < grid.length &&
-                                    0 <= nc && nc < grid[0].length &&
-                                    grid[nr][nc] == 1 && !seen[nr][nc]) {
-                                stack.push(new int[]{nr, nc});
-                                seen[nr][nc] = true;
-                            }
-                        }
-                    }
-                    ans = Math.max(ans, shape);
-                }
-            }
+        if(grid.length==0) return 0;
+        int res=0;
+        
+        for(int i=0;i<grid.length;i++){
+           for(int j=0;j<grid[0].length;j++){
+                  if(grid[i][j]==1){
+                       count=0;
+                      floodfill(grid,i,j);
+                      if(res<count){
+                          res=count;
+                      }
+                  }
+           }
         }
-        return ans;
+        return res;
+    }
+    public static void floodfill(int[][] grid ,int i,int j){
+        if(i<0 || j<0 || i>=grid.length || j>=grid[0].length || grid[i][j]==0) return;
+        
+        grid[i][j]=0;// marking it so that it would not be handled further as it is handled this time
+        count++;
+        
+        floodfill(grid,i+1,j);
+        floodfill(grid,i-1,j);
+        floodfill(grid,i,j-1);
+        floodfill(grid,i,j+1);
+        
     }
 }
+
+// class Pair{
+//     int x;
+//     int y;
+//     public Pair(int x, int y){
+//         this.x = x;
+//         this.y = y;
+//     }
+// }
+// class Solution {
+//     public int maxAreaOfIsland(int[][] grid) {
+//         if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
+//         boolean[][] visited = new boolean[grid.length][grid[0].length];
+//         int[][] arr = {{0,-1},{0,1},{1,0},{-1,0}};
+        
+//         int max = 0;
+//         for(int i=0;i<grid.length;i++){
+//             for(int j=0;j<grid[0].length;j++){
+//                 if(grid[i][j] ==1 && !visited[i][j])
+//                 {
+//                 Deque<Pair> dq = new LinkedList<>();
+//                 dq.add(new Pair(i,j));
+//                 int count = 0;
+//                 visited[i][j] = true;    
+//                 while(!dq.isEmpty()){
+//                     Pair p = dq.poll();
+//                     count++; 
+//                     for(int k=0;k<4;k++){
+//                         int r = p.x+arr[k][0];
+//                         int c = p.y+arr[k][1];
+//                         if( r>=0 &&  c>=0 && r < grid.length && c <grid[0].length && grid[r][c] ==1 && !visited[r][c]){
+                           
+//                             visited[r][c]=true;
+//                             dq.add(new Pair(r,c));
+//                         }
+                    
+//                     }
+//                     max = Math.max(max, count);
+//                 }
+//             }
+//           }
+            
+//         }
+//         return max;
+//     }
+// }
