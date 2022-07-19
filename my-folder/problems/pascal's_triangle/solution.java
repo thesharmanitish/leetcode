@@ -22,7 +22,8 @@ class Solution {
                 
                 
                 
-            }l.add(1);
+            }
+            l.add(1);
             ll.add(l);
             
             
