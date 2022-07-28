@@ -1,6 +1,42 @@
 class Solution {
-    
     public void sortColors(int[] nums) {
+        if(nums.length < 2) {
+            return;
+        }
+
+        int zero = 0;
+        int one = 0;
+        int two = 0;
+
+        for(int i:nums) {
+            switch(i) {
+                case 0:
+                    zero++;
+                    break;
+                case 1:
+                    one++;
+                    break;
+                case 2:
+                    two++;
+                    break;
+            }
+        }
+
+        for(int i=0;i<zero;i++) {
+            nums[i] = 0;
+        }
+
+        for(int i=zero;i<zero+one;i++) {
+            nums[i] = 1;
+        }
+
+        for(int i=zero+one;i<zero+one+two;i++) {
+            nums[i] = 2;
+        }
+    }
+
+
+    public void sortColorsA(int[] nums) {
     int j = nums.length-1;
     int i=0, start=0 ;
     if(nums.length <=1)     return ;
