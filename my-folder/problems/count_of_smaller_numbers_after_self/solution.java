@@ -1,26 +1,24 @@
 class Solution {
     public List<Integer> countSmaller(int[] nums) {
         int len = nums.length;
-        List<Integer> ans = new ArrayList<Integer>();
-        ArrayList<Integer> arr = new ArrayList<Integer>();
-        
-        
-        for(int num: nums) arr.add(num);
+        List<Integer> arr = Arrays.stream(nums)        // IntStream
+                                    .boxed()          // Stream<Integer>
+                                    .sorted()
+                                    .collect(Collectors.toList());
+        List<Integer> result = new ArrayList<Integer>();
         
         Collections.sort(arr);
-          
-        for(int i = 0; i<len; i++){
-            int index = binarySearch(arr,nums[i]);
-            ans.add(index);
-            arr.remove(index);
+        int end = nums.length-1;
+        for(int i=0;i<nums.length;i++){
+            int ind = binarySearch(arr, nums[i], end--);
+            result.add(ind);
+            arr.remove(ind);
         }
-        
-        return ans;
+        return result;
     }
     
-    public int binarySearch(ArrayList<Integer> arr, int target){
+    public int binarySearch(List<Integer> arr, int target, int end){
         int start = 0;
-        int end = arr.size()-1;
         int mid=0;
         
         while(start<=end){
@@ -31,6 +29,7 @@ class Solution {
         }
         if(arr.get(start) == target) return start;
         return mid;
+
     }
 }
 
