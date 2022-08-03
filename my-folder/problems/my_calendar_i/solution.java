@@ -8,7 +8,7 @@ class MyCalendar {
     public boolean book(int start, int end) {
         Integer prev = calendar.floorKey(start),
                 next = calendar.ceilingKey(start);
-        if((prev ==null || calendar.get(prev)<= start) && (next == null || next>= end)){
+        if((prev == null || calendar.get(prev)<= start) && (null ==next || next>= end)){
             calendar.put(start, end);
             return true;
         }
