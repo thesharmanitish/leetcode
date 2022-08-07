@@ -48,41 +48,41 @@ class Trie{
 }
 class Solution {
     public List<List<String>> suggestedProducts(String[] products, String searchWord) {
-        Trie trie = new Trie();
-        List<List<String>> result = new ArrayList<>();
-        // Add all words to trie.
-        for (String w : products)
-            trie.insert(w);
-        String prefix = new String();
-        for (char c : searchWord.toCharArray()) {
-            prefix += c;
-            result.add(trie.getWordsStartingWith(prefix));
+//         Trie trie = new Trie();
+//         List<List<String>> result = new ArrayList<>();
+//         // Add all words to trie.
+//         for (String w : products)
+//             trie.insert(w);
+//         String prefix = new String();
+//         for (char c : searchWord.toCharArray()) {
+//             prefix += c;
+//             result.add(trie.getWordsStartingWith(prefix));
+//         }
+//         return result;
+        
+        
+        List<List<String>> res = new ArrayList<>();
+        TreeMap<String, Integer> map = new TreeMap<>();
+        Arrays.sort(products);
+        List<String> productsList = Arrays.asList(products);
+
+        for (int i = 0; i < products.length; i++) {
+            map.put(products[i], i);
         }
-        return result;
-        
-        
-//         List<List<String>> res = new ArrayList<>();
-//         TreeMap<String, Integer> map = new TreeMap<>();
-//         Arrays.sort(products);
-//         List<String> productsList = Arrays.asList(products);
 
-//         for (int i = 0; i < products.length; i++) {
-//             map.put(products[i], i);
-//         }
+        String key = "";
 
-//         String key = "";
-
-//         for(char c:searchWord.toCharArray()){
-//             key += c;
-//             String ceiling = map.ceilingKey(key);
-//             String floor = map.floorKey(key+'{');
+        for(char c:searchWord.toCharArray()){
+            key += c;
+            String ceiling = map.ceilingKey(key);
+            String floor = map.floorKey(key+'{');
             
-//             if(ceiling == null )
-//                 break;
-//             res.add(productsList.subList(map.get(ceiling),Math.min(map.get(ceiling)+3,map.get(floor)+1)));
-//         }
-//         while (res.size() < searchWord.length()) res.add(new ArrayList<>());
+            if(ceiling == null )
+                break;
+            res.add(productsList.subList(map.get(ceiling),Math.min(map.get(ceiling)+3,map.get(floor)+1)));
+        }
+        while (res.size() < searchWord.length()) res.add(new ArrayList<>());
 
-//         return res;        
+        return res;        
     }
 }
