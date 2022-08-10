@@ -1,13 +1,12 @@
 class Solution {
     public int minDeletions(String s) {
-        Map<Character, Integer> map = new TreeMap<>();
-        for(char c: s.toCharArray()){
-            map.put(c, map.getOrDefault(c,0)+1);
-        }
+        int[] freq = new int[26];
+        for(char c:s.toCharArray())
+            freq[c-'a'] +=1;
         
-        Set<Integer> set = new HashSet<>();
         int count = 0;
-        for(int n:map.values()){
+        Set<Integer> set = new HashSet<>();
+        for(int n:freq){
             if(!set.contains(n))
                 set.add(n);
             else{
