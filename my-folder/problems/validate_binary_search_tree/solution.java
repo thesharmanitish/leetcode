@@ -19,15 +19,13 @@ class Solution {
             return true;
         else if(root.left ==null && root.right ==null)
             return true;
-    
-        return isValidBSTUtil(root, null, null);
+        return isValidBST(root, null, null);
     }
-    public boolean isValidBSTUtil(TreeNode root, Integer max, Integer min) {
-        if(root ==null)
+    public boolean isValidBST(TreeNode root, Integer min, Integer max) {
+        if(root == null)
             return true;
-        if((min!=null && root.val<=min) || (max !=null && root.val >=max))
+        if((min !=null && root.val <= min ) || (max !=null && root.val >= max))
             return false;
-        return isValidBSTUtil(root.left,root.val , min) &&
-            isValidBSTUtil(root.right ,max, root.val);
+        return isValidBST(root.right, root.val, max) && isValidBST(root.left, min, root.val);
     }
 }
