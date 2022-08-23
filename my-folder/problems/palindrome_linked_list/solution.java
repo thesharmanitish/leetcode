@@ -9,39 +9,20 @@
  * }
  */
 class Solution {
+    ListNode root;
     public boolean isPalindrome(ListNode head) {
-        if(head == null || head.next == null)
+        root = head;
+        return isPalindromeHelper(head);
+    }
+    public boolean isPalindromeHelper(ListNode head) {
+        if(head == null )
             return true;
-        
-        ListNode fast = head.next, slow = head, tmp = null, prev = null;
-        
-        while(fast !=null && fast.next != null){
-            fast = fast.next.next;
-            slow = slow.next;
-        }
-        
-        tmp = slow.next;
-        slow.next = null;
-        prev = null;
-        while(tmp!=fast){
-           
-            slow = tmp;
-            tmp = tmp.next;
-            slow.next = prev;
-             prev = slow;
-            
-        }
-        if(fast!=null){
-              slow = tmp;
-            slow.next = prev;
-        }
-        prev = head;
-        while(slow!=null){
-            if(slow.val != prev.val)
-                return false;
-            slow = slow.next;
-            prev = prev.next;
-        }
+        boolean res = isPalindromeHelper(head.next);
+        if(!res)
+            return false;
+        if(head.val != root.val)
+            return false;
+        root = root.next;
         return true;
     }
 }
