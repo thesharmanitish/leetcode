@@ -7,16 +7,19 @@ class Solution {
     public void permuteHelper(int[] nums, List<Integer> current, List<List<Integer>> result, boolean[] visited) {
         if(current.size() == nums.length){
             result.add(new ArrayList(current));
-            return ;
+            return;
         }
+        
         for(int i=0;i<nums.length;i++){
             if(visited[i])
                 continue;
             visited[i] = true;
             current.add(nums[i]);
+            
             permuteHelper(nums, current, result, visited);
-            current.remove(current.size()-1);
+            
             visited[i] = false;
+            current.remove(current.size()-1);            
         }
             
     }
