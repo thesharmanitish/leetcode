@@ -1,19 +1,10 @@
 class Solution {
     public boolean canAttendMeetings(int[][] intervals) {
-        Arrays.sort(intervals, (o1,o2)-> {return o1[0]-o2[0];});
-        
-        int prev = -1;
-        for(int[] a:intervals){
-            if(prev ==-1)
-                prev = a[1];
-            else{
-                if(a[0]<prev)
-                    return false;
-                prev = a[1];
-            }
-            
+        Arrays.sort(intervals, (a,b) -> {return a[0] - b[0];});
+        for(int i=1;i<intervals.length;i++){
+            if(intervals[i-1][1]> intervals[i][0])
+                return false;
         }
-        
         return true;
     }
 }
