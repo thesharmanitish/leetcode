@@ -9,14 +9,7 @@ class Solution {
             }
            
         }
-         max= Math.max(n-last-1, res);
-            return max;
-        
-        
-        
-        
-        
-        
+         return  Math.max(n-last-1, res);
         
         /* Working as well
         */
