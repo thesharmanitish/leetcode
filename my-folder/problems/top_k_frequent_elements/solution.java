@@ -10,23 +10,23 @@ class Solution {
     
     public int  partition(int start, int end, int pivot) {
         int frequency = map.get(unique[pivot]);
+        int greater = start;
         swap(unique, pivot, end);
-        int store_index = start;
-        
         
         for(int i=start;i<end;i++){
-            if(map.get(unique[i])<frequency)
-                swap(unique, store_index++, i);
+            if(map.get(unique[i]) < frequency)
+               swap(unique, i, greater++);
         }
-        
-        swap(unique, store_index, end);
-        return store_index;
+        swap(unique, greater, end);
+        return greater;
     }
     
     public void  quickSort(int left , int right, int kSmallest) {
         if (left == right) return;
-        Random random_num = new Random();
-        int pivot = left + random_num.nextInt(right - left); 
+        
+        Random rand = new Random();
+        
+        int pivot = rand.nextInt(right-left)+left;
         
         pivot = partition(left, right, pivot);
         
@@ -35,7 +35,7 @@ class Solution {
         else if(pivot > kSmallest)
             quickSort(left, pivot-1, kSmallest);
         else
-            quickSort(pivot+1, right, kSmallest);
+            quickSort(pivot+1, right, kSmallest);         
     }
     
     
