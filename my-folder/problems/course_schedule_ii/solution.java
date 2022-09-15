@@ -11,14 +11,15 @@ class Solution {
         }
         for (int i = 0; i < n; ++i) 
             if (degree[i] == 0) bfs.add(i);
+        
         for (int i = 0; i < bfs.size(); ++i)
             for (int j: G[bfs.get(i)])
                 if (--degree[j] == 0) bfs.add(j);
         int[] arr = new int[n];
-         for (int i = 0; i<bfs.size(); i++)
-            arr[i] = bfs.get(i);
+         // for (int i = 0; i<bfs.size(); i++)
+         //    arr[i] = bfs.get(i);
         if(bfs.size() ==n)
-            return arr;
+            return bfs.stream().mapToInt(Integer::intValue).toArray();
         return new int[0];
     }
 }
