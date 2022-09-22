@@ -1,29 +1,47 @@
+// class Solution {
+//     public String reverseWords(String s) {
+//         StringBuilder result = new StringBuilder();
+//         StringBuilder word = new StringBuilder();
+//         for(int i= s.length()-1;i>=0;i--){
+//             if(s.charAt(i) ==' '){
+//                 result = word.append(" "+result);
+//                 word = new StringBuilder();
+//             }else{
+//                 word.append(s.charAt(i));
+//             }   
+//         }
+//         result = word.append(" "+result);
+//         word = new StringBuilder();        
+//         return result.toString().trim();
+//     }
+// }
+
 class Solution {
-public String reverseWords(String s) 
-{
-    char[] s1 = s.toCharArray();
-    int i = 0;
-    for(int j = 0; j < s1.length; j++)
+    public String reverseWords(String s) 
     {
-        if(s1[j] == ' ')
+        char[] s1 = s.toCharArray();
+        int i = 0;
+        for(int j = 0; j < s1.length; j++)
         {
-            reverse(s1, i, j - 1);
-            i = j + 1;
+            if(s1[j] == ' ')
+            {
+                reverse(s1, i, j - 1);
+                i = j + 1;
+            }
+        }
+        reverse(s1, i, s1.length - 1);
+        return new String(s1);
+    }
+
+    public void reverse(char[] s, int l, int r)
+    {
+        while(l < r)
+        {
+            char temp = s[l];
+            s[l] = s[r];
+            s[r] = temp;
+            l++; r--;
         }
     }
-    reverse(s1, i, s1.length - 1);
-    return new String(s1);
-}
 
-public void reverse(char[] s, int l, int r)
-{
-	while(l < r)
-	{
-		char temp = s[l];
-		s[l] = s[r];
-		s[r] = temp;
-		l++; r--;
-	}
-}
-    
 }
