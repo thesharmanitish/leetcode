@@ -20,13 +20,7 @@ class Solution {
             return false;
         if(set.contains(k-root.val))
             return true;
-        
         set.add(root.val);
-        
-        if(findTarget(root.left, k) || findTarget(root.right, k))
-            return true;
-        
-        return false;
-        
+        return findTarget(root.left, k) || findTarget(root.right, k);
     }
 }
