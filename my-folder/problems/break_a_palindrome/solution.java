@@ -3,32 +3,16 @@ class Solution {
         int n = palindrome.length();
         if(n<=1)
             return "";
-        int mid = n/2-1;
-        if(n%2==0)
-           mid = (n-1)/2;
-        boolean flag = false;
+        int mid = n/2;
         char[] arr = palindrome.toCharArray();
-        for(int i=0;i<=mid;i++){
+        for(int i=0;i<mid;i++){
             if(arr[i]!='a'){
                 arr[i] = 'a';
-                flag= true;
-                break;
+                return String.copyValueOf(arr);
             }
         }
-        if(flag)
-            return String.copyValueOf(arr);
         arr[n - 1] = 'b';
-//         if(n%2==1)
-//             mid +=1;
-//         for(int i=n-1;i>mid;i--){
-//             if(arr[i] != 'z') {
-//                 arr[i] += 1;
-//                 flag = true;
-//                 break;
-//             }  
-                
-//         }
-            return String.copyValueOf(arr);
+        return String.copyValueOf(arr);
             
     }
 }
