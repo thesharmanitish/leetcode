@@ -1,22 +1,26 @@
 class Solution {
     public int minDeletions(String s) {
-        int[] freq = new int[26];
-        for(char c:s.toCharArray())
-            freq[c-'a'] +=1;
-        
-        int count = 0;
-        Set<Integer> set = new HashSet<>();
-        for(int n:freq){
-            if(!set.contains(n))
-                set.add(n);
-            else{
-                while(set.contains(n) && n>0){
-                    count+=1;
-                    n-=1;
-                }
-                set.add(n);
-            }
+        // Store the frequency of each character
+        int[] frequency = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            frequency[s.charAt(i) - 'a']++;
         }
-        return count;
+        
+        Arrays.sort(frequency);
+        
+        int deleteCount = 0;
+        // Maximum frequency the current character can have
+        int maxFreqAllowed = s.length();
+        
+        for(int i=25;i>=0;i--){
+            if(frequency[i] ==0)
+                break;
+            if(frequency[i]>maxFreqAllowed){
+                deleteCount +=frequency[i] - maxFreqAllowed;;
+                frequency[i] = maxFreqAllowed;
+            }
+            maxFreqAllowed = Math.max(frequency[i]-1,0);
+        }
+        return deleteCount;
     }
 }
