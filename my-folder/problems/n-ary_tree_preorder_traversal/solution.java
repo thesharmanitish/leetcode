@@ -18,17 +18,15 @@ class Node {
 */
 
 class Solution {
-    List<Integer> result = new ArrayList<>();
+    List<Integer> res = new ArrayList<>();
     public List<Integer> preorder(Node root) {
-        inorderTraversalUtil(root);
-        return result;
-    }
-    public void inorderTraversalUtil(Node root) {
-        if(root  == null)
-            return;
-        result.add(root.val);
-        for(Node node:root.children)
-            inorderTraversalUtil(node);
+        if(root ==null)
+            return res;
+        res.add(root.val);
+        for(Node r:root.children)
+            preorder(r);
+        
+        return res;
         
     }
 }
