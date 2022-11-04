@@ -12,30 +12,25 @@ class Solution {
         int frequency = map.get(unique[pivot]);
         int greater = start;
         swap(unique, pivot, end);
-        
         for(int i=start;i<end;i++){
-            if(map.get(unique[i]) < frequency)
-               swap(unique, i, greater++);
+            if(map.get(unique[i])< frequency)
+                swap(unique, i, greater++);
         }
         swap(unique, greater, end);
         return greater;
     }
     
-    public void  quickSort(int left , int right, int kSmallest) {
-        if (left == right) return;
-        
-        Random rand = new Random();
-        
-        int pivot = rand.nextInt(right-left)+left;
-        
+    public void  quickSort(int left , int right, int kSmallest) {    
+        if(left >= right)
+            return;
+        int pivot = left + (right-left)/2;
         pivot = partition(left, right, pivot);
-        
         if(pivot == kSmallest)
             return;
         else if(pivot > kSmallest)
             quickSort(left, pivot-1, kSmallest);
         else
-            quickSort(pivot+1, right, kSmallest);         
+            quickSort(pivot+1, right, kSmallest);
     }
     
     
