@@ -1,28 +1,31 @@
 class MedianFinder {
-    PriorityQueue<Integer> maxHeap;
     PriorityQueue<Integer> minHeap;
+    PriorityQueue<Integer> maxHeap;
+
     public MedianFinder() {
-        maxHeap = new PriorityQueue<>((a,b)-> {return b-a;});
-        minHeap = new PriorityQueue<>((a,b)-> {return a-b;});
+        minHeap = new PriorityQueue();
+        maxHeap = new PriorityQueue(Collections.reverseOrder());        
     }
     
     public void addNum(int num) {
-        maxHeap.add(num);
-        
-        minHeap.add(maxHeap.poll());
-        if(maxHeap.size() < minHeap.size()){
-            maxHeap.add(minHeap.poll());
+        minHeap.add(num);
+        maxHeap.add(minHeap.poll());
+        if(maxHeap.size() > minHeap.size()){
+             minHeap.add(maxHeap.poll());
         }
     }
     
     public double findMedian() {
-        return maxHeap.size()>minHeap.size() ? maxHeap.peek():((double) maxHeap.peek()+minHeap.peek())/2.0;
+        if(minHeap.size() == maxHeap.size())
+            return (double)( (double)maxHeap.peek() + (double)minHeap.peek())/2.0;
+        else
+            return (double) minHeap.peek();
     }
 }
 
 /**
  * Your MedianFinder object will be instantiated and called as such:
- * MedianFinder obj = new MedianFinder();
+ * MedianFinder obj = new MedianFinder();.HttpMessageNotWritableException: No converter found for return value of type
  * obj.addNum(num);
  * double param_2 = obj.findMedian();
  */
