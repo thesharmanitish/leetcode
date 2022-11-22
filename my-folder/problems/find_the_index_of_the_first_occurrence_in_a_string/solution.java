@@ -1,26 +1,72 @@
 class Solution {
-    public int strStr(String haystack, String needle) {
-        if(haystack.length() ==0 || needle.length() == 0)
-            return -1;
-        int size = needle.length(), hash= 0, start=0, end = haystack.length();
-        for(char ch:needle.toCharArray())
-            hash+=ch;
-        
-        if(end<size)
-            return -1;
-        int temp = 0, i=0;
-        for(i=0;i<size-1;i++)
-            temp += haystack.charAt(i);
-        while(i<end){
-            temp+=haystack.charAt(i);
-            if(temp==hash){
-                String st = haystack.substring(i-size+1,i+1);
-                if(st.equals(needle))
-                    return i-size+1;
+    public int strStr(String txt, String pat) {
+int M = pat.length();
+        int N = txt.length();
+ 
+        // create lps[] that will hold the longest
+        // prefix suffix values for pattern
+        int lps[] = new int[M];
+        int j = 0; // index for pat[]
+ 
+        // Preprocess the pattern (calculate lps[]
+        // array)
+        computeLPSArray(pat, M, lps);
+ 
+        int i = 0; // index for txt[]
+        while ((N - i) >= (M - j)) {
+            if (pat.charAt(j) == txt.charAt(i)) {
+                j++;
+                i++;
             }
-            temp -= haystack.charAt(i-size+1);
-            i++;
+            if (j == M) {
+                return i - j;
+                // j = lps[j - 1];
+            }
+ 
+            // mismatch after j matches
+            else if (i < N && pat.charAt(j) != txt.charAt(i)) {
+                // Do not match lps[0..lps[j-1]] characters,
+                // they will match anyway
+                if (j != 0)
+                    j = lps[j - 1];
+                else
+                    i = i + 1;
+            }
         }
         return -1;
+    }
+ 
+    void computeLPSArray(String pat, int M, int lps[])
+    {
+        // length of the previous longest prefix suffix
+        int len = 0;
+        int i = 1;
+        lps[0] = 0; // lps[0] is always 0
+ 
+        // the loop calculates lps[i] for i = 1 to M-1
+        while (i < M) {
+            if (pat.charAt(i) == pat.charAt(len)) {
+                len++;
+                lps[i] = len;
+                i++;
+            }
+            else // (pat[i] != pat[len])
+            {
+                // This is tricky. Consider the example.
+                // AAACAAAA and i = 7. The idea is similar
+                // to search step.
+                if (len != 0) {
+                    len = lps[len - 1];
+ 
+                    // Also, note that we do not increment
+                    // i here
+                }
+                else // if (len == 0)
+                {
+                    lps[i] = len;
+                    i++;
+                }
+            }
+        }
     }
 }
