@@ -4,19 +4,19 @@
             return s;
         char[] arr = s.toCharArray();
         
-        int n = arr.length-1, max = -1;
+        int n = arr.length, max = -1;
         
-        boolean[][] dp = new boolean[arr.length][arr.length];
+        boolean[][] dp = new boolean[arr.length+1][arr.length+1];
         int start =0, end =0;
-        for(int i=n;i>=0;i--){
+        for(int i=0;i<n;i++){
             dp[i][i] = true;
-            for(int j=i;j<=n;j++){
-                if(arr[i]==arr[j]&& (j-i<3 || dp[i+1][j-1])){
+            for(int j=0;j<=i;j++){
+                if(arr[i]==arr[j]&& (i-j<3 || dp[i-1][j+1])){
                     dp[i][j] = true;
-                    if(max<j-i+1){
-                        max = j-i+1;
-                        start =i;
-                        end =j;
+                    if(max<i-j+1){
+                        max = i-j+1;
+                        start =j;
+                        end =i;
                     }
                 }
             }
