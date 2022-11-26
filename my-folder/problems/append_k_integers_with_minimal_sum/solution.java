@@ -5,6 +5,8 @@ class Solution {
         long sum = 0;
         
         for (int num: nums) {
+            if(num>k)
+                break;
             if (prev != num && num <= k) {
                 k++;
                 sum += num;        
