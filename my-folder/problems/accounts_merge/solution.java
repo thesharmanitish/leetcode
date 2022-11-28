@@ -3,11 +3,12 @@ class Solution {
     int[] rank;
 
 	// The find function here is the same as that in the disjoint set with path compression.
-    public int find(int x) {
-        if (x == root[x]) {
-            return x;
+    public int find(int x){
+        while(root[x] != x){
+            root[x] = root[root[x]];
+            x = root[x];
         }
-        return root[x] = find(root[x]);
+        return root[x];
     }
 
 	// The union function with union by rank
@@ -58,6 +59,7 @@ class Solution {
             List<String> ll = new ArrayList<>();
             
             ll.addAll(entry.getValue());
+            // ll.sort(Comparator.comparing(a -> a));
             Collections.sort(ll);
             ll.add(0, accounts.get(entry.getKey()).get(0));
             result.add(ll);
