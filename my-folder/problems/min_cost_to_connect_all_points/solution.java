@@ -1,48 +1,41 @@
-class Pair{
-    int x;
-    int y;
-    int ind;
-    public Pair(int x, int y, int ind){
-        this.x = x;
-        this.y = y;
-        this.ind= ind;
-    }
-}
 class Edge{
-    Pair a;
-    Pair b;
-    int dist;
-    public Edge(Pair a, Pair b){
+    int[] nodeA;
+    int[] nodeB;
+    int distance;
+    int a;
+    int b;
+    public Edge(int[] nodeA, int[] nodeB, int a, int b){
+        this.nodeA = nodeA;
+        this.nodeB = nodeB;
         this.a = a;
         this.b = b;
-        dist = Math.abs(a.x-b.x)+Math.abs(a.y-b.y);
+        distance = Math.abs(nodeA[0]-nodeB[0])+ Math.abs(nodeA[1]-nodeB[1]);
     }
-    
 }
 class Solution {
     public int minCostConnectPoints(int[][] points) {
 
-        boolean[] visited = new boolean[points.length];
-        int cost = 0, count = 1;
-        PriorityQueue<Edge> q = new PriorityQueue<>((o1,o2)-> {return o1.dist - o2.dist;});
-        for(int i=1;i<points.length;i++)
-            q.add(new Edge(new Pair(points[0][0], points[0][1], 0), new Pair(points[i][0], points[i][1],i)));
-        visited[0] = true;
-        
-        
-        
-        while(count<points.length){
-            Edge edge = q.poll();
-            if(visited[edge.b.ind])
-               continue; 
-            visited[edge.b.ind] = true;
-            cost+= Math.abs(edge.a.x - edge.b.x)+Math.abs(edge.a.y - edge.b.y);
-            count++;
-            for(int i=0;i<points.length;i++)
-                q.add(new Edge(new Pair(points[edge.b.ind][0], points[edge.b.ind][1], edge.b.ind), new Pair(points[i][0], points[i][1],i)));            
+        PriorityQueue<Edge> pq = new PriorityQueue<>((a,b)-> a.distance - b.distance);
+
+        for(int i=1;i<points.length;i++){
+            pq.add(new Edge(points[0], points[i], 0, i));
         }
-        return cost;
-        
-    
+        int count = 0, sum = 0, n = points.length-1;
+        boolean[] visited = new boolean[points.length];
+        visited[0] = true;
+        while(count < n){
+            Edge edge = pq.poll();
+            if(visited[edge.b])
+                continue;
+            sum += edge.distance;
+            System.out.println("sum = "+sum+ " a: "+ edge.a + " b:"+edge.b);
+            visited[edge.b] = true;
+            for(int i=1;i<=n;i++){
+                if(!visited[i])
+                    pq.add(new Edge(edge.nodeB, points[i], edge.b, i));
+            }
+            count++;
+        }
+        return sum;
     }
 }
