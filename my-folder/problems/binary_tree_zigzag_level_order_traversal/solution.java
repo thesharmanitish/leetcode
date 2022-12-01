@@ -14,33 +14,36 @@
  * }
  */
 class Solution {
+    List<List<Integer>> result = new ArrayList<>();
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        if(root == null)
+            return result;
         Deque<TreeNode> bfs = new LinkedList<>();
-        List<List<Integer>> res = new LinkedList<>();
-        if(root ==null)
-            return res;
+
         bfs.add(root);
-        boolean flag= false;
+        boolean flag = true;
         while(!bfs.isEmpty()){
             int size = bfs.size();
-            List<Integer> ll = new LinkedList<>();
-            
-            for(int i=0;i<size;i++){
-                TreeNode t = bfs.poll();
-                if(t.left !=null)    
-                    bfs.add(t.left);
-                if(t.right !=null)    
-                    bfs.add(t.right);
-                ll.add(t.val);
-            }
-            if(!flag)
-                res.add(ll);
-            else {
-                Collections.reverse(ll);
-                res.add(ll);
-            }
+            insert(bfs, flag, size);
             flag = !flag;
         }
-        return res;
+        return result;
+    }
+    public void  insert(Deque<TreeNode> bfs, boolean flag, int size) {
+        List<Integer> list = new ArrayList<>();
+        for(int i=0;i<size;i++){
+            TreeNode t = bfs.poll();
+            if(t ==null) 
+                continue;
+            list.add(t.val);
+            
+            if(t.left !=null) bfs.addLast(t.left);
+            if(t.right !=null) bfs.addLast(t.right);
+        }
+        if(!flag){
+            Collections.reverse(list);
+        }        
+        result.add(list);
+
     }
 }
