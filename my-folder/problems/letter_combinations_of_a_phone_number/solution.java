@@ -1,45 +1,68 @@
+// class Solution {
+//     char[][] arr = new char[][]{{},{'a','b','c'},{'d','e','f'},{'g','h','i'}
+//     ,{'j','k','l'},{'m','n','o'},{'p','q','r','s'},{'t','u','v'},{'w','x','y','z'},{' '}};
+
+//     public List<String> letterCombinations(String digits) {
+//         List<String> result = new ArrayList<>();
+//         if(digits.length() ==0)
+//             return result;
+        
+//         result.add("");
+//         for(char digit:digits.toCharArray()){
+//             result = fun(result, digit-'1');  
+//         }
+//         return result;
+//     }
+//     public List<String>  fun(List<String> list, int ind) {
+//         List<String> temp = new ArrayList<>();
+//         for(int i=0;i<list.size();i++){
+//             for(int j=0;j<arr[ind].length;j++){
+//                 temp.add(list.get(i) +arr[ind][j]);
+//             }
+//         }
+//         return temp;
+//     }
+// }
+
 class Solution {
 
-    static Map<Character, String> NUMS = new HashMap() {
-        {
-            put('0', "");
-            put('1', "");
-            put('2', "abc");
-            put('3', "def");
-            put('4', "ghi");
-            put('5', "jkl");
-            put('6', "mno");
-            put('7', "pqrs");
-            put('8', "tuv");
-            put('9', "wxyz");
-        }
-    };
+    // Map<Character, String> nums = new HashMap() {
+    //     {
+    //         put('0', "");
+    //         put('1', "");
+    //         put('2', "abc");
+    //         put('3', "def");
+    //         put('4', "ghi");
+    //         put('5', "jkl");
+    //         put('6', "mno");
+    //         put('7', "pqrs");
+    //         put('8', "tuv");
+    //         put('9', "wxyz");
+    //     }
+    // };
+    char[][] dict = new char[][]{{},{'a','b','c'},{'d','e','f'},{'g','h','i'}
+    ,{'j','k','l'},{'m','n','o'},{'p','q','r','s'},{'t','u','v'},{'w','x','y','z'},{' '}};    
+    char[] arr;
+    List<String> res = new ArrayList<>();
 
     public List<String> letterCombinations(String digits) {
-        if (digits.length() == 0) {
-            return new ArrayList<String>();
-        }
-        StringBuilder sb = new StringBuilder();
-        List<String> res = new ArrayList<>();
-        dfs(sb, 0, digits, NUMS, res);
-
+        if (digits.length() == 0)
+            return res;
+        arr = digits.toCharArray();
+        dfs(new StringBuilder(), 0);
         return res;
     }
 
-    private void dfs(StringBuilder sb, int index, String digits, Map<Character, String> nums, List<String> res) {
-        if(sb.length() == digits.length()){
+    private void dfs(StringBuilder sb, int index) {
+        if(sb.length() == arr.length){
             res.add(sb.toString());
             return;
         }
-        
-        for(char c: nums.get(digits.charAt(index)).toCharArray()){
+        for(char c:dict[arr[index]-'1']){
             sb.append(c);
-            
-            dfs(sb, index+1, digits, nums, res);
-            
-            sb.deleteCharAt(sb.length()-1);
+            dfs(sb, index+1);
+            sb.setLength(sb.length()-1);
         }
-        
     }
 }
 
