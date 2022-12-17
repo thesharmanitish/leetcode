@@ -8,7 +8,7 @@ class Solution {
     public void subsetsWithDupHelper(int[] nums, int ind, List<Integer> set) {
         if(ind>nums.length)
             return;
-        result.add(new ArrayList<>(set));
+        result.add(new ArrayList(set));
 
         for(int i=ind; i<nums.length;i++){
             if (i != ind && nums[i] == nums[i - 1]) {
@@ -21,6 +21,46 @@ class Solution {
 
     }
 }
+
+
+// class Solution {
+//     Set<List<Integer>> result = new HashSet<>();
+//     public List<List<Integer>> subsetsWithDup(int[] nums) {
+//         Arrays.sort(nums);
+//         subsetsWithDupHelper(nums,0 , new ArrayList<>());
+//         return result.stream().toList();
+//     }
+//     public void subsetsWithDupHelper(int[] nums, int ind, List<Integer> set) {
+//         if(ind>nums.length)
+//             return;
+//         result.add(new ArrayList(set));
+
+//         for(int i=ind; i<nums.length;i++){
+//             set.add(nums[i]);
+//             subsetsWithDupHelper(nums,i+1 , set);
+//             set.remove(set.size()-1);
+//         }
+
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // class Solution {
 //     public List<List<Integer>> subsetsWithDup(int[] nums) {
