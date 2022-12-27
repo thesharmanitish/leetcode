@@ -1,25 +1,18 @@
 class Solution {
     public int maximumBags(int[] capacity, int[] rocks, int additionalRocks) {
-        Map<Integer, Integer> map = new TreeMap<>();
-        int i=0;
-        for(int j=0;j<capacity.length;j++){
-            int diff = capacity[j]-rocks[j];
-            map.put(j, diff);
-        }
-      Map<Integer, Integer> sortedMap = map.entrySet().stream()
-                               .sorted(Map.Entry.comparingByValue())
-                               .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-                               (e1, e2) -> e2, LinkedHashMap::new));
+        for(int i=0;i<capacity.length;i++){
+            capacity[i] -= rocks[i];
+        } 
+        int count = 0;
+        Arrays.sort(capacity);
+        for(int i=0;i<capacity.length;i++){
+            if(additionalRocks>=capacity[i]){
+                additionalRocks -= capacity[i];
+            }else if(capacity[i]>0)
+                break;
 
-        for(Map.Entry<Integer, Integer> p:sortedMap.entrySet()){
-            if(p.getValue() > additionalRocks)
-                break;
-            additionalRocks -= p.getValue();
-            if(additionalRocks<0)
-                break;
-            System.out.println("nitish");
-            i++;            
+            count++;
         }
-        return i;
+        return count;  
     }
 }
