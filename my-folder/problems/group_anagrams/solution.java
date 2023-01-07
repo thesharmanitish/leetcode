@@ -21,6 +21,6 @@ class Solution {
             String t = String.valueOf(arr);
             map.computeIfAbsent(t, (x)->new ArrayList<>()).add(s);
         }
-        return map.values().stream().collect(Collectors.toList());        
+        return map.values().stream().toList();        
     }
 }
