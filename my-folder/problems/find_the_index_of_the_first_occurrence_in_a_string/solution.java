@@ -70,3 +70,31 @@ int M = pat.length();
         }
     }
 }
+
+
+// class Solution {
+//     public int strStr(String haystack, String needle) {
+//         int hash = 0, j= 0, cHash = 0;
+//         if(needle.length()>haystack.length())
+//             return -1;
+//         if(needle.length() == haystack.length())
+//             return needle.equals(haystack)? 0 : -1;
+
+//         for(j=0;j<needle.length()-1;j++){
+//             hash += (needle.charAt(j)-'a');
+//             cHash += (haystack.charAt(j) -'a');
+//         }
+//         hash += (needle.charAt(j)-'a');
+//         int i=0;
+//         for(;j<haystack.length();j++){
+//             cHash += (haystack.charAt(j)-'a');
+//             if(cHash == hash && haystack.substring(i,j+1).equals(needle)){
+//                 return i;
+//             }else{
+//                 cHash -= (haystack.charAt(i++)-'a');
+                
+//             }
+//         }
+//         return -1;
+//     }
+// }
