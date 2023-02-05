@@ -1,14 +1,15 @@
 class Solution {
     public int firstUniqChar(String s) {
-        int[] carr = new int[26];
-        char[] d = s.toCharArray();
-        for(char c:d)    {
-            carr[c-'a'] += 1;
+        Boolean[] visited = new Boolean[26];
+        for(char c:s.toCharArray()){
+            if(visited[c-'a'] == null)
+                visited[c-'a'] = true;
+            else if(visited[c-'a'])
+                visited[c-'a'] = false;
         }
-        
-        int i=0;
-        for(char c:d){
-            if(carr[c-'a'] ==1)
+        int i = 0;
+        for(char c:s.toCharArray()){
+            if(visited[c-'a'] == true)
                 return i;
             i++;
         }
