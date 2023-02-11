@@ -1,25 +1,23 @@
 class Solution {
     public boolean strongPasswordCheckerII(String password) {
-        boolean isCapital = false, isSmaller = false, isNumber = false, isSymbol = false , isConsecutive=false;
+        boolean isLowerCase = false, isUpperCase = false, isDigit = false, isSplChar = false;
+        char prev = ' ';
         if(password.length()<8)
             return false;
-        Character prev = null;
         for(char c:password.toCharArray()){
-            if(prev !=null && prev == c)
-                return false;
-            
-            if(Character.isDigit(c))
-                isNumber = true;
-            else if(c >='a' && c<= 'z')
-                isSmaller = true;
-            else if(c >='A' && c<= 'Z')
-                isCapital = true;
-            else isSymbol= true;
-            
-            prev = c;
+            if(Character.isLowerCase(c))
+                isLowerCase = true;
+            else if(Character.isUpperCase(c))
+                isUpperCase = true;
+            else if(Character.isDigit(c))
+                isDigit = true;
+            else
+                isSplChar = true;
                 
+            if(prev == c)
+                return false;
+            prev = c;
         }
-        return isNumber && isSmaller && isCapital && isSymbol;
-        
+        return isLowerCase && isUpperCase && isDigit && isSplChar;
     }
 }
