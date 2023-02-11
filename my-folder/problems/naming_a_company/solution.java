@@ -1,32 +1,33 @@
 class Solution {
     public long distinctNames(String[] ideas) {
-        // Group idea by their initials.
-        HashSet<String>[] initialGroup = new HashSet[26];
-        for (int i = 0; i < 26; ++i) {
-            initialGroup[i] = new HashSet<>();
-        }
-        for (String idea : ideas) {
-            initialGroup[idea.charAt(0) - 'a'].add(idea.substring(1));
-        }
+        HashSet<Integer>[] set = new HashSet[26];
         
-        // Calculate number of valid names from every pair of groups.
-        long answer = 0;
-        for (int i = 0; i < 25; ++i) {
-            for (int j = i + 1; j < 26; ++j) {
-                // Get the number of mutual suffixes.
-                long numOfMutual = 0;
-                for (String ideaA : initialGroup[i]) {
-                    if (initialGroup[j].contains(ideaA)) {
-                        numOfMutual++;
-                    }
+        for(String idea:ideas){
+            int ind = idea.charAt(0)-'a';
+            if(set[ind] == null)
+                set[ind] = new HashSet<>();
+            set[ind].add(idea.substring(1).hashCode());
+        }
+        long ans =0;
+        for(int i=0;i<25;i++){
+            if(set[i] == null)
+                continue;
+            for(int j=i+1;j<26;j++){
+                if(set[j] == null)
+                    continue;
+                int count1 = 0, count2 = 0;
+                for(int hcode: set[i]){
+                    if(!set[j].contains(hcode))
+                        count1++;
+                }
+                for(int hcode: set[j]){
+                    if(!set[i].contains(hcode))
+                        count2++;
                 }
 
-                // Valid names are only from distinct suffixes in both groups.
-                // Since we can swap a with b and swap b with a to create two valid names, multiple answer by 2.
-                answer += 2 * (initialGroup[i].size() - numOfMutual) * (initialGroup[j].size() - numOfMutual);
+                ans += count1*count2;
             }
         }
-        
-        return answer;
+        return 2*ans;
     }
 }
