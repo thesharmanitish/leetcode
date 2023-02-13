@@ -1,43 +1,24 @@
 class Solution {
-    public long bfs(int n, Map<Integer, List<Integer>> adj, int[] degree, int seats) {
-        Queue<Integer> q = new LinkedList<>();
-        for (int i = 1; i < n; i++) {
-            if (degree[i] == 1) {
-                q.offer(i);
-            }
+    long ans = 0; int s;
+    
+    private int dfs(int i, int prev, List<List<Integer>> graph) {
+        int people = 1;
+        for (int x: graph.get(i)) {
+            if (x == prev) continue;
+            people += dfs(x, i, graph);
         }
-
-        int[] representatives = new int[n];
-        Arrays.fill(representatives, 1);
-        long fuel = 0;
-
-        while (!q.isEmpty()) {
-            int node = q.poll();
-            fuel += Math.ceil((double) representatives[node] / seats);
-
-            for (int neighbor : adj.get(node)) {
-                degree[neighbor]--;
-                representatives[neighbor] += representatives[node];
-                if (degree[neighbor] == 1 && neighbor != 0) {
-                    q.offer(neighbor);
-                }
-            }
-        }
-        return fuel;
+        if (i != 0) ans += (people + s - 1) / s;
+        return people;
     }
 
     public long minimumFuelCost(int[][] roads, int seats) {
-        int n = roads.length + 1;
-        Map<Integer, List<Integer>> adj = new HashMap<>();
-        int[] degree = new int[n];
-
-        for (int[] road : roads) {
-            adj.computeIfAbsent(road[0], k -> new ArrayList<Integer>()).add(road[1]);
-            adj.computeIfAbsent(road[1], k -> new ArrayList<Integer>()).add(road[0]);
-            degree[road[0]]++;
-            degree[road[1]]++;
+        List<List<Integer>> graph = new ArrayList(); s = seats;
+        for (int i = 0; i < roads.length + 1; i++) graph.add(new ArrayList());
+        for (int[] r: roads) {
+            graph.get(r[0]).add(r[1]);
+            graph.get(r[1]).add(r[0]);
         }
-
-        return bfs(n, adj, degree, seats);
+        dfs(0, 0, graph);
+        return ans;
     }
 }
