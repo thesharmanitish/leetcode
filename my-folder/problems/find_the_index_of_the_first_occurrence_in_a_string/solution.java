@@ -1,76 +1,57 @@
 class Solution {
-    public int strStr(String txt, String pat) {
-int M = pat.length();
-        int N = txt.length();
- 
-        // create lps[] that will hold the longest
-        // prefix suffix values for pattern
-        int lps[] = new int[M];
-        int j = 0; // index for pat[]
- 
-        // Preprocess the pattern (calculate lps[]
-        // array)
-        computeLPSArray(pat, M, lps);
- 
-        int i = 0; // index for txt[]
-        while ((N - i) >= (M - j)) {
-            if (pat.charAt(j) == txt.charAt(i)) {
-                j++;
+    int[] lps;
+    public int strStr(String haystack, String needle) {
+        
+        int m = haystack.length(), n = needle.length();
+
+        if(n>m)
+            return -1;
+        
+        if(m == n)
+            return haystack.equals(needle)?0:-1;
+        
+        int i = 0, j = 0;
+        lps = new int[n];
+        
+        lps(needle.toCharArray());
+
+        while((m-i)>=(n-j)){   // if chars left in haystack are less than needle, no need to check, return -1
+            while(i<m && j<n && haystack.charAt(i) == needle.charAt(j)){
                 i++;
+                j++;
             }
-            if (j == M) {
-                return i - j;
-                // j = lps[j - 1];
-            }
- 
-            // mismatch after j matches
-            else if (i < N && pat.charAt(j) != txt.charAt(i)) {
-                // Do not match lps[0..lps[j-1]] characters,
-                // they will match anyway
-                if (j != 0)
-                    j = lps[j - 1];
-                else
-                    i = i + 1;
+            if(j == n)
+                return i-j;
+            
+
+            else if(i<m && haystack.charAt(i) != needle.charAt(j)){
+                if(j != 0){
+                    j = lps[j-1];
+                }else
+                    i += 1;
             }
         }
         return -1;
+
     }
- 
-    void computeLPSArray(String pat, int M, int lps[])
-    {
-        // length of the previous longest prefix suffix
-        int len = 0;
-        int i = 1;
-        lps[0] = 0; // lps[0] is always 0
- 
-        // the loop calculates lps[i] for i = 1 to M-1
-        while (i < M) {
-            if (pat.charAt(i) == pat.charAt(len)) {
-                len++;
-                lps[i] = len;
+    public void lps(char[] needle){
+        
+        int j = 0, i = 1;
+        
+        while(i<needle.length){
+            if(needle[i] == needle[j]){
+                lps[i] = ++j;
                 i++;
-            }
-            else // (pat[i] != pat[len])
-            {
-                // This is tricky. Consider the example.
-                // AAACAAAA and i = 7. The idea is similar
-                // to search step.
-                if (len != 0) {
-                    len = lps[len - 1];
- 
-                    // Also, note that we do not increment
-                    // i here
-                }
-                else // if (len == 0)
-                {
-                    lps[i] = len;
+            }else{
+                if(j!=0){
+                    j = lps[j-1];
+                }else{
                     i++;
                 }
             }
         }
     }
 }
-
 
 // class Solution {
 //     public int strStr(String haystack, String needle) {
