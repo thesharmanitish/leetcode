@@ -1,37 +1,30 @@
 class Solution {
     public int countTime(String time) {
-        int res = 1;
-        boolean flag1 = false, flag2 = false;
-        
-        if(time.charAt(0) == time.charAt(1) && time.charAt(0)=='?'){
-            res *=24;
-            flag1 = true;
-        }if(time.charAt(3) == time.charAt(4) && time.charAt(4)=='?'){
-            res*=60;
-            flag2 = true;
+        int count = 0;
+        boolean hourflag = false, minflag = false;
+        if(time.charAt(0) == '?'){
+            if(time.charAt(1) == '?'){
+                count  = 24;
+                hourflag = true;
+            }else if(time.charAt(1) < '4')
+                count  = 3;
+            else
+                count  = 2;
         }
-        
-        if(flag1 && flag2)
-            return res;
-        
-        for(int i=0;i<time.length();i++){
-            if((flag1 && i==0) || (flag2 && i==3)){
-                i+=2;
-                continue;
-            }
-            char c = time.charAt(i);
-            // System.out.println(res +" "+i +" "+c);
-            if(c=='?'){
-                switch(i){
-                    case 0: res *= time.charAt(1)>'3'?2:3; break;
-                    case 1: res *= time.charAt(0)=='2'?4:10; break;
-                    case 3: res *= 6; break;
-                    case 4: res *= 10; break;
-                }
-                
-            }
-            
+        if(!hourflag && time.charAt(1) == '?'){
+            count = time.charAt(0) <'2'?10:4;
         }
-        return res;
+        if(time.charAt(3) == '?'){
+            if(time.charAt(4) == '?'){
+                count  = count ==0?60:count*60;
+                minflag = true;
+            }else
+                count = count ==0?6:count*6;            
+        }
+        if(!minflag && time.charAt(4) == '?'){
+            count = count ==0?10:count*10;   
+        }
+
+        return count==0?1:count;
     }
 }
