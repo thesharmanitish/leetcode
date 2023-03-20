@@ -10,10 +10,8 @@ class Solution {
                 if(prefix ==null)
                     prefix = arr[0];
                 p = arr[arr.length-1];
-                p = prefix.concat("/"+p);
-                p = p.trim();
+                p = prefix.concat("/"+p).trim();
                 String content = path.substring(path.indexOf('(')+1, path.indexOf(')'));
-                // System.out.print(content +" "+ prefix+""+p );
                 
                 if(!map.containsKey(content))
                     map.put(content, new ArrayList<>());
