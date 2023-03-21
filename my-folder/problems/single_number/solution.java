@@ -1,9 +1,11 @@
 class Solution {
     public int singleNumber(int[] nums) {
-        int res = 0;
+        int pos = 0;
+        
         for(int num:nums){
-            res = res^num;
+            pos = pos ^ num;
+            
         }
-        return res;
+        return pos;
     }
 }
