@@ -1,16 +1,14 @@
 class Solution {
     public int partitionString(String s) {
-        int count = 0;
         Set<Character> set = new HashSet<>();
+        int count = 0;
         for(char c:s.toCharArray()){
             if(set.contains(c)){
-                count++;
                 set.clear();
-                set.add(c);
+                count++;        
             }
-            else
-                set.add(c);
+            set.add(c);
         }
-        return count+1;
+        return set.isEmpty()?count:count+1;
     }
 }
