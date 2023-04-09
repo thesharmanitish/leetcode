@@ -16,4 +16,4 @@ jobs:
           github-token: ${{ secrets.tokens }}
           leetcode-csrf-token: ${{ secrets.LEETCODE_CSRF_TOKEN }}
           leetcode-session: ${{ secrets.LEETCODE_SESSION }}
-          destination-folder: synced
+          destination-folder: my-folder
