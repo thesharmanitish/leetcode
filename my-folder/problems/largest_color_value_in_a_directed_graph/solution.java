@@ -22,25 +22,23 @@ class Solution {
         int answer = 1, nodesSeen = 0;
         while (!q.isEmpty()) {
             int node = q.poll();
+
+
             answer = Math.max(answer, ++count[node][colors.charAt(node) - 'a']);
             nodesSeen++;
-
             if (!adj.containsKey(node)) {
                 continue;
             }
 
-            for (int neighbor : adj.get(node)) {
-                for (int i = 0; i < 26; i++) {
-                    // Try to update the frequency of colors for the neighbor to include paths
-                    // that use node->neighbor edge.
-                    count[neighbor][i] = Math.max(count[neighbor][i], count[node][i]);
-                }
-
-                indegree[neighbor]--;
-                if (indegree[neighbor] == 0) {
-                    q.offer(neighbor);
-                }
+            for(int neighbour:adj.get(node)){
+                for(int i=0;i<26;i++){
+                    count[neighbour][i] = Math.max(count[neighbour][i], count[node][i]);
+                } 
+                indegree[neighbour]--;
+                if(indegree[neighbour] ==0)
+                    q.offer(neighbour);
             }
+            
         }
 
         return nodesSeen < n ? -1 : answer;
