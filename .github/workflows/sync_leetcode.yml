@@ -11,9 +11,9 @@ jobs:
 
     steps:
       - name: LeetCode Sync
-        uses: thesharmanitish/leetcode-sync@v1.5
+        uses: thesharmanitish/leetcode-sync@v1.5.1
         with:
           github-token: ${{ secrets.tokens }}
           leetcode-csrf-token: ${{ secrets.LEETCODE_CSRF_TOKEN }}
           leetcode-session: ${{ secrets.LEETCODE_SESSION }}
-          destination-folder: my-folder
+          destination-folder: synced
